@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Multiflix — Unlock Test</title>
+
+  <!-- Sans Sharif Font -->
+  <link href="https://fonts.cdnfonts.com/css/sans-sharif" rel="stylesheet">
+
+  <style>
+    :root {
+      --accent: #e2c874;
+      --accent-light: #ffeccb;
+      --accent-dark: #bca94e;
+      --card-bg: rgba(38, 36, 29, 0.93);
+      --bg-main: #15130d;
+      --success: #10b981;
+      --text-muted: #d8cfa2;
+      --border: rgba(226, 200, 116, 0.14);
+      --white: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Sans Sharif', Arial, Helvetica, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #18160f 0%, #232011 100%);
+      position: relative;
+      overflow: hidden;
+      color: var(--white);
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 180%;
+      height: 180%;
+      background: radial-gradient(circle, #e2c87422 0%, transparent 75%);
+      transform: translate(-50%, -50%);
+      z-index: 0;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.22;
+    }
+
+    /* Skeleton Loader */
+    .skeleton-loader {
+      width: 100%;
+      max-width: 410px;
+      padding: 36px 28px 32px 28px;
+      border-radius: 18px;
+      background: var(--card-bg);
+      backdrop-filter: blur(7px) saturate(120%);
+      border: 1.5px solid var(--border);
+      box-shadow: 0 6px 32px 0 #00000080;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      animation: fadeOut 0.4s ease forwards;
+      animation-delay: 1.8s;
+    }
+
+    .skeleton {
+      height: 20px;
+      border-radius: 8px;
+      background: linear-gradient(100deg, #2c2a21 20%, #3a372b 40%, #2c2a21 60%);
+      background-size: 200% 100%;
+      animation: skeletonMove 1.4s infinite linear;
+    }
+
+    .skeleton.title {
+      height: 28px;
+      width: 70%;
+      margin: 0 auto;
+    }
+
+    .skeleton.input {
+      height: 42px;
+      border-radius: 10px;
+    }
+
+    .skeleton.button {
+      height: 46px;
+      border-radius: 10px;
+      width: 100%;
+    }
+
+    @keyframes skeletonMove {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    @keyframes fadeOut {
+      to { opacity: 0; visibility: hidden; }
+    }
+
+    /* Actual Card */
+    .card {
+      position: absolute;
+      opacity: 0;
+      z-index: 1;
+      width: 100%;
+      max-width: 410px;
+      padding: 36px 28px 32px 28px;
+      border-radius: 18px;
+      background: var(--card-bg);
+      backdrop-filter: blur(7px) saturate(120%);
+      border: 1.5px solid var(--border);
+      text-align: center;
+      box-shadow: 0 6px 32px 0 #00000080;
+      transition: box-shadow 0.25s ease, transform 0.25s ease, opacity 0.6s ease;
+      will-change: box-shadow, transform;
+      animation: fadeIn 0.6s ease forwards;
+      animation-delay: 1.8s;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .card h1 {
+      color: var(--accent);
+      font-size: 1.8rem;
+      margin-bottom: 18px;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 24px;
+    }
+
+    .card input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #1c1a13;
+      color: var(--white);
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.25s ease;
+    }
+
+    .card input:focus {
+      border-color: var(--accent);
+    }
+
+    .card button {
+      width: 100%;
+      padding: 12px 14px;
+      margin-top: 16px;
+      border-radius: 10px;
+      border: none;
+      background: var(--accent);
+      color: #000;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.25s ease, transform 0.25s ease;
+    }
+
+    .card button:hover {
+      background: var(--accent-light);
+      transform: scale(1.03);
+    }
+
+    .card button:active {
+      background: var(--accent-dark);
+      transform: scale(0.98);
+    }
+
+    @media (max-width: 480px) {
+      .card,
+      .skeleton-loader {
+        padding: 28px 22px;
+      }
+
+      .card h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Skeleton Loader (Visible first) -->
+  <div class="skeleton-loader">
+    <div class="skeleton title"></div>
+    <div class="skeleton"></div>
+    <div class="skeleton input"></div>
+    <div class="skeleton button"></div>
+  </div>
+
+  <!-- Actual Card (Appears after loading) -->
+  <div class="card">
+    <h1>Unlock Multiflix</h1>
+    <p>Enter your access key below to continue.</p>
+    <form>
+      <input type="text" placeholder="Enter key...">
+      <button type="submit">Unlock</button>
+    </form>
+  </div>
+</body>
+  </html>
